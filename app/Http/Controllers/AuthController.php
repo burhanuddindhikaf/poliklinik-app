@@ -28,11 +28,11 @@ class AuthController extends Controller
             } elseif ($user->role == 'dokter'){
                 return redirect()->route('dokter.dashboard');
             }else {
-                return redirect()->route('pasern.dashboard');
+                return redirect()->route('pasien.dashboard');
             }
 
         }
-        return back()->withErrors(['email' => 'email atau passeord salah !']);
+        return back()->withErrors(['email' => 'email atau password salah !']);
     }
 
     public function register(Request $request)
@@ -55,6 +55,11 @@ class AuthController extends Controller
             'password'=>Hash::make($request->password),
             'role'=>'pasien',
         ]);
+        return redirect()->route('login');
+    }
+    public function logout()
+    {
+        Auth::logout();
         return redirect()->route('login');
     }
 }

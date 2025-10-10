@@ -14,8 +14,24 @@ route::get('/register', [AuthController::class, 'showRegister'])->name('register
 route::post('/register', [AuthController::class, 'register']);
 route::post('/logout', [AuthController::class, 'logout']);
 
-// route::middleware(['auth','role:admin'])->prefix('admin')->group(function()
-// {
-//     route::get('/dashboard')
-// }
-//)
+route::middleware(['auth','role:admin'])->prefix('admin')->group(function()
+{
+    route::get('/dashboard', function() {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+}
+);
+route::middleware(['auth','role:dokter'])->prefix('dokter')->group(function()
+{
+    route::get('/dashboard', function() {
+        return view('dokter.dashboard');
+    })->name('dokter.dashboard');
+}
+);
+route::middleware(['auth','role:pasien'])->prefix('pasien')->group(function()
+{
+    route::get('/dashboard', function() {
+        return view('pasien.dashboard');
+    })->name('pasien.dashboard');
+}
+);
