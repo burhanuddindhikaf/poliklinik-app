@@ -26,7 +26,7 @@ class User extends Authenticatable
         'role',
         'id_poli',
         'email',
-        'password'
+        'password',
     ];
 
     /**
@@ -51,11 +51,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    public function poli(){
+    public function poli()
+    {
         return $this->belongsTo(Poli::class, 'id_poli');
     }
-    public function jadwalPeriksas(){
-        return $this->hasMany(Poli::class, 'id_dokter');
+    public function jadwalPeriksas()
+    {
+        return $this->hasMany(JadwalPeriksa::class, 'id_dokter');
     }
 }
