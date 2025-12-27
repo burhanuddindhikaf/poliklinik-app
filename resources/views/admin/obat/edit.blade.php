@@ -26,12 +26,24 @@
                                 </div>
                             </div>
 
-                            <div class="form-group mb-3">
-                                <label for="harga" class="form-label">harga <span
-                                        class="text-danger">*</span></label>
-                                <input type="number" id="harga" name="harga" value="{{ old('harga', $obat->harga) }}"
-                                    class="form-control" required min="0" step="1">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="stok" class="form-label">stok <span
+                                            class="text-danger">*</span></label>
+                                        <input type="number" id="stok" name="stok"
+                                            class="form-control" min="0" step="1" value="{{ old('stok',$obat->stok) }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="harga" class="form-label">Harga <span
+                                            class="text-danger">*</span></label>
+                                    <input type="number"  id="harga" name="harga"
+                                        class="form-control" min="0" step="1" required value="{{ old('harga',$obat->harga) }}">
+                                </div>
                             </div>
+
+                            
 
                             <div class="form-group mb-3">
                                 <button type="submit" class="btn btn-success">

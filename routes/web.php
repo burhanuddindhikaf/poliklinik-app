@@ -11,9 +11,7 @@ use App\Http\Controllers\Pasien\PoliController as PasienPoliController ;
 use App\Http\Controllers\Dokter\PeriksaPasienController;
 use App\Http\Controllers\Dokter\RiwayatPasienController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AuthController::class, 'showLogin'])->name('login');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);

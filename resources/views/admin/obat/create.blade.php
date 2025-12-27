@@ -21,19 +21,31 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
-                                        <label for="kemasan" class="form-label">Kemasan</label>
+                                        <label for="kemasan" class="form-label">Kemasan <span
+                                            class="text-danger">*</span></label>
                                         <input type="text" id="kemasan" name="kemasan"
                                             class="form-control" placeholder="Contoh: Strip, Botol, Tube">
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group mb-3">
-                                <label for="harga" class="form-label">Harga <span
-                                        class="text-danger">*</span></label>
-                                <input type="number"  id="harga" name="harga"
-                                    class="form-control" min="0" step="1" required>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="stok" class="form-label">stok <span
+                                            class="text-danger">*</span></label>
+                                        <input type="number" id="stok" name="stok"
+                                            class="form-control" min="0" step="1">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="harga" class="form-label">Harga <span
+                                            class="text-danger">*</span></label>
+                                    <input type="number"  id="harga" name="harga"
+                                        class="form-control" min="0" step="1" required>
+                                </div>                                
                             </div>
+
+                            
 
                             <div class="form-group mt-4">
                                 <button type="submit" class="btn btn-success">

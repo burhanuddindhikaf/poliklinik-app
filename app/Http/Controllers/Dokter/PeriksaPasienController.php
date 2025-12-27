@@ -9,6 +9,7 @@ use App\Models\Obat;
 use App\Models\Periksa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PeriksaPasienController extends Controller
 {
@@ -44,6 +45,30 @@ class PeriksaPasienController extends Controller
 
         $obatIds = json_decode($request->obat_json, true);
 
+
+        try {
+        DB::transaction(function () use ($request, $obatIds) {
+
+            // 1️⃣ Ambil & LOCK data obat (biar aman dari race condition)
+            $obats = Obat::whereIn('id', $obatIds)
+                ->lockForUpdate()
+                ->get()
+                ->keyBy('id');
+
+            // 2️⃣ VALIDASI stok dulu
+            foreach ($obatIds as $idObat) {
+                if (!isset($obats[$idObat])) {
+                    throw new \Exception("Obat tidak ditemukan.");
+                }
+
+                if ($obats[$idObat]->stok <= 0) {
+                    throw new \Exception(
+                        "Stok obat '{$obats[$idObat]->nama_obat}' habis."
+                    );
+                }
+            }
+
+
         $periksa = Periksa::create([
             'id_daftar_poli' => $request->id_daftar_poli,
             'tgl_periksa'    => now(),
@@ -56,7 +81,18 @@ class PeriksaPasienController extends Controller
                 'id_periksa' => $periksa->id,
                 'id_obat'    => $idObat,
             ]);
+                Obat::where('id', $idObat)->decrement('stok', 1);
         }
+});
+
+    } catch (\Throwable $e) {
+    return redirect()
+        ->back()
+        ->withInput()
+        ->withErrors(['stok' => $e->getMessage()])
+        ->with('error', $e->getMessage());
+
+}
 
         return redirect()
             ->route('periksa-pasien.index')
